@@ -26,7 +26,7 @@ pipeline {
     stages {
         stage('Build'){
             steps {
-                sh 'mvn1 -s settings.xml -DskipTests install'
+                sh 'mvn -s settings.xml -DskipTests install'
             }
             post {
                 success {
@@ -94,6 +94,14 @@ pipeline {
                      type: 'war']
                   ]
                 )
+            }
+        }
+
+        stage('Deploy to Tomcat'){
+            steps{
+                sshagent(['jenkinstotomcatdeploy']){
+                    sh "scp -o StrictHostKeyChecking=no target/vprofile-v2.war ubuntu@54.250.247.118:/opt/tomcat/webapps/demo.war"
+                }
             }
         }
 
