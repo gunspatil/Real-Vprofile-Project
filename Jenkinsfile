@@ -99,7 +99,7 @@ pipeline {
 
         stage('Deploy to Tomcat'){
             steps{
-                sshagent(['jenkinstotomcatdeploy']){
+                sshagent(['jenkinstomcatSSH']){
                     sh "scp -o StrictHostKeyChecking=no target/vprofile-v2.war ubuntu@54.250.247.118:/opt/tomcat/webapps/demo.war"
                 }
             }
